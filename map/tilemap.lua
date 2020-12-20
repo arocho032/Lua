@@ -28,6 +28,9 @@ function TileMap:new(x, y, rawmap, tileimage)
 	self.mr = table.getn(rawmap)
 	self.mc = table.getn(rawmap[1])
 
+	self.h = self.mr * self.th
+	self.w = self.mc * self.tw
+
 	self.map = {}
 	for row = 1, self.mr do
 		for col = 1, self.mc do

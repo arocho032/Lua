@@ -13,9 +13,27 @@ function love.load()
 	map['wall']  = numrows * 19 + 10
 	map['floor'] = numrows * 5 + 1
 
-	mm = MazeMaker(10, 10)
+	Screen = require 'screen/screen'
+	screen = Screen.standard_configuration()
+	gamewindow_w = screen.windows[1].w
+	gamewindow_h = screen.windows[1].h
+	max_cols = math.floor(gamewindow_w / 16)
+	max_rows = math.floor(gamewindow_h / 16)
+
+	mm = MazeMaker(math.floor((max_rows - 1)/2), math.floor((max_cols - 1)/2))
 	rm = mm:asRawmap(map)
-	tm = TileMap(0, 0, rm, tileimages)
+	map = TileMap(0, 0, rm, tileimages)
+
+	screen.windows[1]:add_element(map, "midground")
+
+    bgCanvas = love.graphics.newCanvas(gamewindow_w, gamewindow_h)
+    love.graphics.setCanvas(bgCanvas)
+    love.graphics.setColor(0.8, 0.9, 0.4)
+    love.graphics.rectangle("fill", 0, 0, gamewindow_w, gamewindow_h)
+    love.graphics.setCanvas()
+    
+    screen.windows[1]:add_element(bgCanvas, "background")
+
 
 end
 
@@ -23,7 +41,7 @@ function love.update(dt)
 end
 
 function love.draw()
-	tm:draw()
+	screen:draw()
 end
 
 function print_r(arr, indentLevel)

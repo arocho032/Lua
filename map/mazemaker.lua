@@ -134,18 +134,19 @@ end
 function MazeMaker:asRawmap(tilemap)
 	local rawmap = {}
 	local row = {}
-	for i = 1, self.grid.w * 2 + 1 do
+	for j = 1, self.grid.h * 2 + 1 do
 		table.insert(row, {tilemap['floor'], tilemap['wall']})	
 	end 
 	table.insert(rawmap, row)
 
-	for i = 1, self.grid.h do
+	for j = 1, self.grid.w do
 		local top = {}
 		local bottom = {}
 		table.insert(top, {tilemap['floor'], tilemap['wall']})
 		table.insert(bottom, {tilemap['floor'], tilemap['wall']})
-		for j  = 1, self.grid.w do
-			local cell = self.grid:get(i, j)
+		for i = 1, self.grid.h do
+			print(i, self.grid.w, j, self.grid.h)
+			local cell = self.grid:get(j, i)
 			table.insert(top, tilemap['floor'])			
 			if cell:isLinked(cell.east)                                                                                                                                                                   
 				then table.insert(top, tilemap['floor'])
